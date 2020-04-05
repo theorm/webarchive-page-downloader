@@ -1,4 +1,5 @@
 import bent from 'bent'
+import { fail } from 'assert'
 
 const defaultGetJson = bent('json')
 const defaultGetString = bent('string')
@@ -17,7 +18,7 @@ const getArchivedPageUrl = (
 
 export interface UrlArchiveHistory {
   urlKey: string
-  timestamp: number
+  timestamp: Date
   originalUrl: string
   mimeType: string
   statusCode: number
@@ -25,12 +26,22 @@ export interface UrlArchiveHistory {
   length: number
 }
 
+const TimestampRegex = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
+
+const parseTimestamp = (timestamp: string) => {
+  const parts = timestamp.match(TimestampRegex)?.slice(1)
+  if (parts == null) fail(`Could not parse timestamp from string: ${timestamp}`)
+
+  const [year, month, day, hour, minute, second] = parts
+  return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}Z`)
+}
+
 function parseWebarchiveHistoryResponse(response: string[][]) {
   return response.slice(1).map(
     entry =>
       ({
         urlKey: entry[0],
-        timestamp: parseInt(entry[1], 10),
+        timestamp: parseTimestamp(entry[1]),
         originalUrl: entry[2],
         mimeType: entry[3],
         statusCode: parseInt(entry[4], 10),

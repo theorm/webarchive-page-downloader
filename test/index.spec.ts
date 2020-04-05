@@ -11,7 +11,7 @@ describe('getPageArchiveHistory', () => {
       mimeType: 'text/html',
       originalUrl: 'https://web.archive.org/test',
       statusCode: 302,
-      timestamp: 20170203064724,
+      timestamp: new Date('2017-02-03T06:47:24Z'),
       urlKey: 'org,archive,web)/test'
     }
     deepEqual(history[0], expectedFirstEntry)

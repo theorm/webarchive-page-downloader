@@ -1,6 +1,6 @@
 {
   "name": "webarchive-page-downloader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "build",
   "license": "MIT",
   "homepage": "https://github.com/theorm/webarchive-page-downloader",
