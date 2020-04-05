@@ -1,10 +1,10 @@
 {
   "name": "webarchive-page-downloader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "build",
   "license": "MIT",
   "homepage": "https://github.com/theorm/webarchive-page-downloader",
-  "types": "index.d.ts",
+  "types": "build/index.d.ts",
   "scripts": {
     "build": "tsc",
     "start": "node build",
