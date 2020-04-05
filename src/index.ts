@@ -7,12 +7,23 @@ const defaultGetString = bent('string')
 const getArchiveHistoryUrl = (url: string) =>
   `http://web.archive.org/cdx/search/cdx?url=${url}&output=json`
 
+const toWebArchiveTimestamp = (timestamp: Date) => {
+  return [
+    timestamp.getUTCFullYear(),
+    timestamp.getUTCMonth() + 1,
+    timestamp.getUTCDate(),
+    timestamp.getUTCHours(),
+    timestamp.getUTCMinutes(),
+    timestamp.getUTCSeconds()
+  ].join('')
+}
+
 const getArchivedPageUrl = (
   url: string,
-  timestamp: number,
+  timestamp: Date,
   includeWaybackHeader = false
 ) =>
-  `https://web.archive.org/web/${timestamp}${
+  `https://web.archive.org/web/${toWebArchiveTimestamp(timestamp)}${
     includeWaybackHeader ? '' : 'id_'
   }/${url}/`
 
@@ -61,7 +72,7 @@ export async function getPageArchiveHistory(
 
 export async function getArchivedPage(
   url: string,
-  timestamp: number,
+  timestamp: Date,
   includeWaybackHeader = false,
   getString: bent.RequestFunction<string> = defaultGetString
 ) {

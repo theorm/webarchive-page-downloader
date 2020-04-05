@@ -19,14 +19,15 @@ describe('getPageArchiveHistory', () => {
 })
 
 describe('getArchivedPage', () => {
+  const testDate = new Date('1998-11-11T18:45:51Z')
   it('returns page content', async () => {
-    const pageContent = await getArchivedPage('www.google.com', 19981111184551)
+    const pageContent = await getArchivedPage('www.google.com', testDate)
     match(pageContent, /Google Search Engine Prototype/)
   })
 
   it('raises an error', async () => {
     try {
-      await getArchivedPage('www.asdf123asdf.com', 19981111184551)
+      await getArchivedPage('www.asdf123asdf.com', testDate)
       fail('Expected to throw an error')
     } catch (e) {
       equal(e.message, 'Incorrect statusCode: 404')
