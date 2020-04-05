@@ -1,0 +1,44 @@
+{
+  "name": "webarchive-page-downloader",
+  "version": "1.0.0",
+  "main": "build",
+  "license": "MIT",
+  "homepage": "https://github.com/theorm/webarchive-page-downloader",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build",
+    "watch": "tsc --watch",
+    "lint": "eslint src/**",
+    "test": "jest",
+    "prepublish": "yarn lint && yarn test && yarn build"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "/test/.*\\.spec\\.(ts|tsx|js)$"
+  },
+  "devDependencies": {
+    "@types/bent": "7",
+    "@types/jest": "25",
+    "@types/node": "13",
+    "@typescript-eslint/eslint-plugin": "2",
+    "@typescript-eslint/parser": "2",
+    "eslint": "6",
+    "eslint-config-prettier": "6",
+    "eslint-plugin-prettier": "3",
+    "jest": "25",
+    "prettier": "2",
+    "ts-jest": "25",
+    "typescript": "3"
+  },
+  "dependencies": {
+    "bent": "7.1"
+  }
+}
