@@ -1,8 +1,17 @@
-import bent from 'bent'
+import fetch from 'node-fetch'
 import { fail } from 'assert'
 
-const defaultGetJson = bent('json')
-const defaultGetString = bent('string')
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Json = { [key: string]: any; [key: number]: any } | any[]
+type GetJsonFunction = (url: string) => Promise<Json>
+type GetStringFunction = (url: string) => Promise<string>
+
+const defaultGetJson = (url: string) => fetch(url).then(res => res.json())
+const defaultGetString = (url: string) =>
+  fetch(url).then(res => {
+    if (res.ok) return res.text()
+    throw new Error(`${res.statusText} (${res.status})`)
+  })
 
 const getArchiveHistoryUrl = (url: string) =>
   `http://web.archive.org/cdx/search/cdx?url=${url}&output=json`
@@ -64,7 +73,7 @@ function parseWebarchiveHistoryResponse(response: string[][]) {
 
 export async function getPageArchiveHistory(
   url: string,
-  getJson: bent.RequestFunction<bent.Json> = defaultGetJson
+  getJson: GetJsonFunction = defaultGetJson
 ) {
   const response = await getJson(getArchiveHistoryUrl(url))
   return parseWebarchiveHistoryResponse(response as string[][])
@@ -74,7 +83,7 @@ export async function getArchivedPage(
   url: string,
   timestamp: Date,
   includeWaybackHeader = false,
-  getString: bent.RequestFunction<string> = defaultGetString
+  getString: GetStringFunction = defaultGetString
 ) {
   return await getString(
     getArchivedPageUrl(url, timestamp, includeWaybackHeader)

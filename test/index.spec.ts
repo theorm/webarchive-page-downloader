@@ -30,7 +30,7 @@ describe('getArchivedPage', () => {
       await getArchivedPage('www.asdf123asdf.com', testDate)
       fail('Expected to throw an error')
     } catch (e) {
-      equal(e.message, 'Incorrect statusCode: 404')
+      equal(e.message, 'NOT FOUND (404)')
     }
   })
 })
